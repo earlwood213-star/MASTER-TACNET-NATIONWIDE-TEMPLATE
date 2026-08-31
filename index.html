@@ -193,32 +193,31 @@
 
     <div id="main-container">
 
-        <!-- SCHOOL SETUP PANEL -->
         <div id="setup-view" class="view-panel">
             <div class="setup-card">
                 <h2 style="color: #fbbf24; font-size: 24px; border-bottom: 2px solid #fbbf24; padding-bottom: 10px;">⚙️ SCHOOL LOCATION & SYSTEM SETUP</h2>
-                <p style="color: #cbd5e1; font-size: 14px; margin-top: 8px;">Enter your school address details below. The system will automatically convert the address into live map coordinates upon saving.</p>
+                <p style="color: #cbd5e1; font-size: 14px; margin-top: 8px;">Enter your school address details below. The system will automatically convert any U.S. address into map coordinates upon saving.</p>
                 
                 <div class="form-grid">
                     <div class="form-group full-width">
                         <label>School District Name</label>
-                        <input type="text" id="cfg-district" placeholder="e.g. Amherst County Public Schools">
+                        <input type="text" id="cfg-district" placeholder="e.g. Fairfax County Public Schools">
                     </div>
                     <div class="form-group full-width">
                         <label>School Campus Name</label>
-                        <input type="text" id="cfg-school" placeholder="e.g. Amherst County High School">
+                        <input type="text" id="cfg-school" placeholder="e.g. Oakton High School">
                     </div>
                     <div class="form-group full-width">
                         <label>Street Address</label>
-                        <input type="text" id="cfg-address" placeholder="e.g. 139 Lancer Ln">
+                        <input type="text" id="cfg-address" placeholder="e.g. 2900 Sutton Rd">
                     </div>
                     <div class="form-group">
                         <label>City</label>
-                        <input type="text" id="cfg-city" placeholder="e.g. Amherst">
+                        <input type="text" id="cfg-city" placeholder="e.g. Vienna">
                     </div>
                     <div class="form-group">
                         <label>State & Zip Code</label>
-                        <input type="text" id="cfg-state-zip" placeholder="e.g. VA 24521">
+                        <input type="text" id="cfg-state-zip" placeholder="e.g. VA 22181">
                     </div>
                 </div>
 
@@ -226,7 +225,6 @@
             </div>
         </div>
         
-        <!-- DRIVER VIEW -->
         <div id="driver-view" class="view-panel hidden">
             <div class="glass-card">
                 <div class="driver-header">
@@ -255,7 +253,6 @@
             </div>
         </div>
 
-        <!-- SCHOOL COMMAND MONITOR VIEW -->
         <div id="command-view" class="view-panel hidden">
             <div class="sidebar">
                 <div class="panel-glass">
@@ -287,13 +284,13 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
         let SCHOOL_CONFIG = {
-            district_name: "SAMPLE DISTRICT",
-            school_name: "CENTRAL HIGH",
+            district_name: "",
+            school_name: "",
             address: "",
             city: "",
             state_zip: "",
-            map_center_lat: 37.5857,
-            map_center_lng: -79.0514,
+            map_center_lat: null,
+            map_center_lng: null,
             max_slots: 20
         };
 
@@ -301,32 +298,72 @@
         let busMarkers = {};
         let fleet = [];
 
+        // Triple-fallback geocoding function to guarantee location lookup succeeds
+        async function geocodeAddress(street, city, stateZip) {
+            let fullSearch = `${street}, ${city}, ${stateZip}`.trim();
+
+            // Service 1: OpenStreetMap Nominatim
+            try {
+                let r1 = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(fullSearch)}`);
+                let d1 = await r1.json();
+                if (d1 && d1.length > 0) {
+                    return { lat: parseFloat(d1[0].lat), lng: parseFloat(d1[0].lon) };
+                }
+            } catch(e) {}
+
+            // Service 2: Photon
+            try {
+                let r2 = await fetch(`https://photon.komoot.io/api/?q=${encodeURIComponent(fullSearch)}`);
+                let d2 = await r2.json();
+                if (d2 && d2.features && d2.features.length > 0) {
+                    let coords = d2.features[0].geometry.coordinates;
+                    return { lat: coords[1], lng: coords[0] };
+                }
+            } catch(e) {}
+
+            // Service 3: Esri World Geocoder
+            try {
+                let r3 = await fetch(`https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates?f=json&singleLine=${encodeURIComponent(fullSearch)}`);
+                let d3 = await r3.json();
+                if (d3 && d3.candidates && d3.candidates.length > 0) {
+                    return { lat: d3.candidates[0].location.y, lng: d3.candidates[0].location.x };
+                }
+            } catch(e) {}
+
+            return null;
+        }
+
         async function saveSchoolSetup() {
             let btn = document.getElementById('btn-save');
-            btn.innerText = "⏳ LOCATING SCHOOL ADDRESS...";
+            btn.innerText = "⏳ LOCATING ADDRESS...";
             btn.disabled = true;
 
             let street = document.getElementById('cfg-address').value.trim();
             let city = document.getElementById('cfg-city').value.trim();
             let stateZip = document.getElementById('cfg-state-zip').value.trim();
 
-            SCHOOL_CONFIG.district_name = document.getElementById('cfg-district').value.trim() || "SAMPLE DISTRICT";
-            SCHOOL_CONFIG.school_name = document.getElementById('cfg-school').value.trim() || "CENTRAL HIGH";
-            SCHOOL_CONFIG.address = street || "MAIN ST";
-            SCHOOL_CONFIG.city = city || "ANYTOWN";
-            SCHOOL_CONFIG.state_zip = stateZip || "VA 00000";
+            SCHOOL_CONFIG.district_name = document.getElementById('cfg-district').value.trim() || "SCHOOL DISTRICT";
+            SCHOOL_CONFIG.school_name = document.getElementById('cfg-school').value.trim() || "CAMPUS";
+            SCHOOL_CONFIG.address = street || "";
+            SCHOOL_CONFIG.city = city || "";
+            SCHOOL_CONFIG.state_zip = stateZip || "";
 
-            if (street && city) {
-                let query = `${street}, ${city}, ${stateZip}`;
-                try {
-                    let resp = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}`);
-                    let data = await resp.json();
-                    if (data && data.length > 0) {
-                        SCHOOL_CONFIG.map_center_lat = parseFloat(data[0].lat);
-                        SCHOOL_CONFIG.map_center_lng = parseFloat(data[0].lon);
+            if (street || city) {
+                let coords = await geocodeAddress(street, city, stateZip);
+                if (coords) {
+                    SCHOOL_CONFIG.map_center_lat = coords.lat;
+                    SCHOOL_CONFIG.map_center_lng = coords.lng;
+                } else {
+                    alert("Unable to pinpoint exact address. Defaulting to general region.");
+                    if (!SCHOOL_CONFIG.map_center_lat) {
+                        SCHOOL_CONFIG.map_center_lat = 38.89511;
+                        SCHOOL_CONFIG.map_center_lng = -77.03637;
                     }
-                } catch(e) {
-                    console.error("Geocoding lookup failed, defaulting to base coordinates.");
+                }
+            } else {
+                if (!SCHOOL_CONFIG.map_center_lat) {
+                    SCHOOL_CONFIG.map_center_lat = 38.89511;
+                    SCHOOL_CONFIG.map_center_lng = -77.03637;
                 }
             }
 
@@ -342,6 +379,9 @@
             document.getElementById('driver-school-display').innerText = `${SCHOOL_CONFIG.school_name} - ${SCHOOL_CONFIG.district_name}`;
             document.getElementById('driver-address-display').innerText = `${SCHOOL_CONFIG.address}, ${SCHOOL_CONFIG.city}, ${SCHOOL_CONFIG.state_zip}`;
 
+            let baseLat = SCHOOL_CONFIG.map_center_lat || 38.89511;
+            let baseLng = SCHOOL_CONFIG.map_center_lng || -77.03637;
+
             if (fleet.length === 0) {
                 for (let i = 1; i <= SCHOOL_CONFIG.max_slots; i++) {
                     fleet.push({
@@ -349,15 +389,14 @@
                         id: '',
                         driver: '',
                         status: 'GREEN',
-                        lat: SCHOOL_CONFIG.map_center_lat + (Math.random() - 0.5) * 0.015,
-                        lng: SCHOOL_CONFIG.map_center_lng + (Math.random() - 0.5) * 0.015
+                        lat: baseLat + (Math.random() - 0.5) * 0.015,
+                        lng: baseLng + (Math.random() - 0.5) * 0.015
                     });
                 }
             } else {
-                // Adjust base positions if location changed
                 fleet.forEach(bus => {
-                    bus.lat = SCHOOL_CONFIG.map_center_lat + (Math.random() - 0.5) * 0.015;
-                    bus.lng = SCHOOL_CONFIG.map_center_lng + (Math.random() - 0.5) * 0.015;
+                    bus.lat = baseLat + (Math.random() - 0.5) * 0.015;
+                    bus.lng = baseLng + (Math.random() - 0.5) * 0.015;
                 });
             }
 
@@ -488,9 +527,3 @@
 
             marker.bindPopup(`<b>${title}</b><br>Status: ${bus.status}`);
             busMarkers[bus.slot] = marker;
-        }
-
-        window.onload = initializeTenantSystem;
-    </script>
-</body>
-</html>
