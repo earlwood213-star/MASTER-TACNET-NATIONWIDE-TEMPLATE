@@ -18,13 +18,13 @@
         }
 
         .view-switcher {
-            background: rgba(1, 10, 42, 0.9);
+            background: rgba(1, 10, 42, 0.95);
             border-bottom: 2px solid #00f0ff;
-            padding: 8px 20px;
+            padding: 10px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            z-index: 100;
+            z-index: 1000;
         }
 
         .school-branding-tag {
@@ -45,13 +45,12 @@
             font-size: 14px;
             font-weight: 800; 
             cursor: pointer; 
-            transition: all 0.3s ease;
         }
         .nav-btn.active { background: #00f0ff; color: #020926; box-shadow: 0 0 15px #00f0ff; }
         .nav-btn-setup { border-color: #fbbf24; color: #fbbf24; }
         .nav-btn-setup.active { background: #fbbf24; color: #020926; box-shadow: 0 0 15px #fbbf24; }
 
-        #main-container { flex: 1; position: relative; overflow: hidden; }
+        #main-container { flex: 1; position: relative; width: 100%; height: calc(100vh - 60px); }
         .view-panel { width: 100%; height: 100%; display: flex; }
         .hidden { display: none !important; }
 
@@ -66,12 +65,11 @@
         .setup-card {
             width: 100%;
             max-width: 700px;
-            background: rgba(0, 120, 255, 0.12);
-            backdrop-filter: blur(12px);
+            background: rgba(0, 120, 255, 0.15);
             border: 2px solid #fbbf24;
             border-radius: 18px;
             padding: 25px;
-            box-shadow: 0 8px 32px rgba(251, 191, 36, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
         }
 
         .form-grid {
@@ -92,12 +90,14 @@
         }
 
         .form-group input {
-            background: #000;
-            color: #fff;
-            border: 1px solid #00f0ff;
+            background: #000000 !important;
+            color: #ffffff !important;
+            border: 2px solid #00f0ff !important;
             padding: 12px;
             border-radius: 6px;
-            font-size: 15px;
+            font-size: 16px;
+            outline: none;
+            pointer-events: auto !important;
         }
 
         .btn-save-setup {
@@ -128,27 +128,15 @@
             width: 100%;
             max-width: 750px;
             background: rgba(0, 120, 255, 0.12);
-            backdrop-filter: blur(12px);
             border: 2px solid rgba(0, 240, 255, 0.5);
             border-radius: 18px;
             padding: 20px;
-            box-shadow: 0 8px 32px 0 rgba(0, 240, 255, 0.18);
         }
 
         .driver-header { text-align: center; border-bottom: 2px solid rgba(0, 240, 255, 0.3); padding-bottom: 12px; }
-        .main-title { font-size: 38px; font-weight: 900; color: #00f0ff; text-shadow: 0 0 20px rgba(0, 240, 255, 0.8); }
+        .main-title { font-size: 38px; font-weight: 900; color: #00f0ff; }
         .school-title-sub { font-size: 22px; font-weight: 800; color: #ffffff; margin-top: 2px; }
         .school-address-sub { font-size: 14px; color: #94a3b8; font-weight: 600; margin-top: 2px; }
-        .creator-text { font-size: 16px; font-weight: 700; color: #7dd3fc; margin-top: 6px; }
-        .patent-text { font-size: 13px; color: #fbbf24; font-weight: bold; margin-top: 4px; }
-
-        .safety-banner-large {
-            background: #eab308; color: #000; font-size: 20px; font-weight: 900; padding: 12px;
-            border-radius: 10px; text-align: center; text-transform: uppercase; margin-top: 10px;
-        }
-
-        .bus-status-title { font-size: 30px; font-weight: 900; color: #00f0ff; }
-        .bus-status-sub { font-size: 20px; font-weight: 700; color: #e2e8f0; }
 
         .grid-buttons { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 12px; }
         .btn-large { padding: 20px; border-radius: 12px; border: 2px solid #fff; font-size: 22px; font-weight: 900; color: #fff; cursor: pointer; text-align: center; }
@@ -157,10 +145,10 @@
         .btn-orange { background: #ea580c; }
         .btn-red { background: #991b1b; grid-column: span 2; font-size: 24px; padding: 22px; border: 3px solid #f87171; }
 
-        .select-driver-slot { background: #000; color: #00f0ff; border: 2px solid #00f0ff; padding: 8px; border-radius: 8px; font-size: 16px; font-weight: bold; width: 100%; margin-bottom: 10px; }
+        .select-driver-slot { background: #000; color: #00f0ff; border: 2px solid #00f0ff; padding: 10px; border-radius: 8px; font-size: 16px; font-weight: bold; width: 100%; margin-bottom: 10px; }
 
         /* COMMAND MONITOR VIEW */
-        .sidebar { width: 440px; background: rgba(2, 9, 38, 0.95); border-right: 2px solid #00f0ff; display: flex; flex-direction: column; padding: 15px; gap: 12px; }
+        .sidebar { width: 400px; background: rgba(2, 9, 38, 0.95); border-right: 2px solid #00f0ff; display: flex; flex-direction: column; padding: 15px; gap: 12px; }
         .panel-glass { background: rgba(0, 120, 255, 0.1); border: 1px solid rgba(0, 240, 255, 0.3); border-radius: 12px; padding: 12px; }
         .input-row { display: flex; gap: 8px; margin-top: 8px; }
         .input-row input, .input-row select { background: #000; color: #fff; border: 1px solid #00f0ff; padding: 8px; border-radius: 6px; flex: 1; }
@@ -172,22 +160,19 @@
         .bus-item { background: rgba(255,255,255,0.05); padding: 10px; border-radius: 6px; border-left: 4px solid #00f0ff; display: flex; justify-content: space-between; align-items: center; }
         .badge { padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: 800; }
         .badge-GREEN { background: #22c55e; color: #fff; }
-        .badge-YELLOW { background: #eab308; color: #000; }
-        .badge-ORANGE { background: #f97316; color: #fff; }
-        .badge-RED { background: #ef4444; color: #fff; }
 
-        .map-box { flex: 1; height: 100%; background: #000; position: relative; }
-        #map { width: 100%; height: 100%; }
+        .map-box { flex: 1; height: 100%; width: 100%; background: #000; position: relative; }
+        #map { width: 100%; height: 100%; min-height: 400px; }
     </style>
 </head>
 <body>
 
     <div class="view-switcher">
-        <div class="school-branding-tag" id="header-district-name">TACNET SCHOOL TEMPLATE</div>
+        <div class="school-branding-tag" id="header-district-name">TACNET SCHOOL SYSTEM</div>
         <div class="nav-btn-group">
-            <button id="tab-setup" class="nav-btn nav-btn-setup active" onclick="showView('setup')">⚙️ SCHOOL LOCATION SETUP</button>
-            <button id="tab-driver" class="nav-btn" onclick="showView('driver')">🏠 MAIN DRIVER UI</button>
-            <button id="tab-command" class="nav-btn" onclick="showView('command')">🖥️ SCHOOL MONITOR VIEW</button>
+            <button id="tab-setup" class="nav-btn nav-btn-setup active" onclick="showView('setup')">⚙️ LOCATION SETUP</button>
+            <button id="tab-driver" class="nav-btn" onclick="showView('driver')">🏠 DRIVER UI</button>
+            <button id="tab-command" class="nav-btn" onclick="showView('command')">🖥️ MONITOR MAP</button>
         </div>
     </div>
 
@@ -195,33 +180,32 @@
 
         <div id="setup-view" class="view-panel">
             <div class="setup-card">
-                <h2 style="color: #fbbf24; font-size: 24px; border-bottom: 2px solid #fbbf24; padding-bottom: 10px;">⚙️ SCHOOL LOCATION & SYSTEM SETUP</h2>
-                <p style="color: #cbd5e1; font-size: 14px; margin-top: 8px;">Enter your school address details below. The system will automatically convert any U.S. address into map coordinates upon saving.</p>
+                <h2 style="color: #fbbf24; font-size: 24px; border-bottom: 2px solid #fbbf24; padding-bottom: 10px;">⚙️ SYSTEM & LOCATION SETUP</h2>
                 
                 <div class="form-grid">
                     <div class="form-group full-width">
                         <label>School District Name</label>
-                        <input type="text" id="cfg-district" placeholder="e.g. Fairfax County Public Schools">
+                        <input type="text" id="cfg-district" value="Fairfax County Public Schools">
                     </div>
                     <div class="form-group full-width">
                         <label>School Campus Name</label>
-                        <input type="text" id="cfg-school" placeholder="e.g. Oakton High School">
+                        <input type="text" id="cfg-school" value="Oakton High School">
                     </div>
                     <div class="form-group full-width">
                         <label>Street Address</label>
-                        <input type="text" id="cfg-address" placeholder="e.g. 2900 Sutton Rd">
+                        <input type="text" id="cfg-address" value="2900 Sutton Rd">
                     </div>
                     <div class="form-group">
                         <label>City</label>
-                        <input type="text" id="cfg-city" placeholder="e.g. Vienna">
+                        <input type="text" id="cfg-city" value="Vienna">
                     </div>
                     <div class="form-group">
-                        <label>State & Zip Code</label>
-                        <input type="text" id="cfg-state-zip" placeholder="e.g. VA 22181">
+                        <label>State & Zip</label>
+                        <input type="text" id="cfg-state-zip" value="VA 22181">
                     </div>
                 </div>
 
-                <button class="btn-save-setup" id="btn-save" onclick="saveSchoolSetup()">💾 SAVE LOCATION & CENTER MAP</button>
+                <button class="btn-save-setup" id="btn-save" onclick="applySetup()">💾 SAVE LOCATION & LOAD MAP</button>
             </div>
         </div>
         
@@ -229,26 +213,22 @@
             <div class="glass-card">
                 <div class="driver-header">
                     <div class="main-title">TACNET SCHOOL</div>
-                    <div class="school-title-sub" id="driver-school-display">PLEASE COMPLETE SETUP</div>
+                    <div class="school-title-sub" id="driver-school-display">UNCONFIGURED</div>
                     <div class="school-address-sub" id="driver-address-display">Location Unconfigured</div>
-                    <div class="creator-text">Creator: Earl A. Wood (Retired Deputy Sheriff)</div>
-                    <div class="patent-text">PATENT PENDING</div>
                 </div>
-                <div class="safety-banner-large">⚠️ WATCH YOUR SURROUNDINGS AND DRIVE SAFELY</div>
             </div>
 
             <div class="glass-card">
-                <p style="color: #00f0ff; font-size: 14px; font-weight: bold; margin-bottom: 6px;">SELECT CURRENT ACTIVE DRIVER UNIT:</p>
+                <label style="color: #00f0ff; font-weight: bold;">ACTIVE DRIVER UNIT:</label>
                 <select id="select-active-driver-slot" class="select-driver-slot" onchange="syncDriverView()"></select>
-
-                <div class="bus-status-title" id="driver-bus-title">Slot #1 (Unassigned)</div>
-                <div class="bus-status-sub" id="driver-name-sub">Driver: Unassigned</div>
+                <div style="font-size: 26px; font-weight: 900; color: #00f0ff;" id="driver-bus-title">Slot #1</div>
+                <div style="font-size: 18px; color: #fff;" id="driver-name-sub">Driver: Unassigned</div>
 
                 <div class="grid-buttons">
-                    <button class="btn-large btn-green">GREEN<br><small style="font-size:12px;">Normal Operation</small></button>
-                    <button class="btn-large btn-yellow">YELLOW<br><small style="font-size:12px;">Schedule Delay</small></button>
-                    <button class="btn-large btn-orange">🎙️ ORANGE<br><small style="font-size:12px;">Hold to Talk</small></button>
-                    <button id="btn-red-emergency" class="btn-large btn-red">🚨 RED EMERGENCY<br><small style="font-size:12px;">HOLD 5 SECONDS</small></button>
+                    <button class="btn-large btn-green">GREEN</button>
+                    <button class="btn-large btn-yellow">YELLOW</button>
+                    <button class="btn-large btn-orange">ORANGE</button>
+                    <button class="btn-large btn-red">🚨 RED EMERGENCY</button>
                 </div>
             </div>
         </div>
@@ -256,17 +236,17 @@
         <div id="command-view" class="view-panel hidden">
             <div class="sidebar">
                 <div class="panel-glass">
-                    <p style="color: #00f0ff; font-weight: bold; font-size: 15px;">✏️ ASSIGN OR CLEAR BUS & DRIVER</p>
+                    <p style="color: #00f0ff; font-weight: bold;">✏️ ASSIGN BUS & DRIVER</p>
                     <div class="input-row">
-                        <select id="select-slot" onchange="populateAssignmentInputs()"></select>
+                        <select id="select-slot" onchange="populateInputs()"></select>
                     </div>
                     <div class="input-row">
                         <input type="text" id="input-bus-num" placeholder="Bus #">
                         <input type="text" id="input-driver-name" placeholder="Driver Name">
                     </div>
                     <div class="btn-group-row">
-                        <button class="action-btn" onclick="saveSlotData()">💾 Save Unit</button>
-                        <button class="erase-btn" onclick="clearSlotData()">🗑️ Clear</button>
+                        <button class="action-btn" onclick="saveSlot()">💾 Save Unit</button>
+                        <button class="erase-btn" onclick="clearSlot()">🗑️ Clear</button>
                     </div>
                 </div>
 
@@ -284,246 +264,131 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
         let SCHOOL_CONFIG = {
-            district_name: "",
-            school_name: "",
-            address: "",
-            city: "",
-            state_zip: "",
-            map_center_lat: null,
-            map_center_lng: null,
-            max_slots: 20
+            district: "Fairfax County Public Schools",
+            school: "Oakton High School",
+            address: "2900 Sutton Rd",
+            city: "Vienna",
+            state_zip: "VA 22181",
+            lat: 38.8821,
+            lng: -77.2754
         };
 
         let map = null;
         let busMarkers = {};
         let fleet = [];
 
-        // Triple-fallback geocoding function to guarantee location lookup succeeds
-        async function geocodeAddress(street, city, stateZip) {
-            let fullSearch = `${street}, ${city}, ${stateZip}`.trim();
+        function applySetup() {
+            SCHOOL_CONFIG.district = document.getElementById('cfg-district').value || "District";
+            SCHOOL_CONFIG.school = document.getElementById('cfg-school').value || "School";
+            SCHOOL_CONFIG.address = document.getElementById('cfg-address').value || "";
+            SCHOOL_CONFIG.city = document.getElementById('cfg-city').value || "";
+            SCHOOL_CONFIG.state_zip = document.getElementById('cfg-state-zip').value || "";
 
-            // Service 1: OpenStreetMap Nominatim
-            try {
-                let r1 = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(fullSearch)}`);
-                let d1 = await r1.json();
-                if (d1 && d1.length > 0) {
-                    return { lat: parseFloat(d1[0].lat), lng: parseFloat(d1[0].lon) };
-                }
-            } catch(e) {}
-
-            // Service 2: Photon
-            try {
-                let r2 = await fetch(`https://photon.komoot.io/api/?q=${encodeURIComponent(fullSearch)}`);
-                let d2 = await r2.json();
-                if (d2 && d2.features && d2.features.length > 0) {
-                    let coords = d2.features[0].geometry.coordinates;
-                    return { lat: coords[1], lng: coords[0] };
-                }
-            } catch(e) {}
-
-            // Service 3: Esri World Geocoder
-            try {
-                let r3 = await fetch(`https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates?f=json&singleLine=${encodeURIComponent(fullSearch)}`);
-                let d3 = await r3.json();
-                if (d3 && d3.candidates && d3.candidates.length > 0) {
-                    return { lat: d3.candidates[0].location.y, lng: d3.candidates[0].location.x };
-                }
-            } catch(e) {}
-
-            return null;
-        }
-
-        async function saveSchoolSetup() {
-            let btn = document.getElementById('btn-save');
-            btn.innerText = "⏳ LOCATING ADDRESS...";
-            btn.disabled = true;
-
-            let street = document.getElementById('cfg-address').value.trim();
-            let city = document.getElementById('cfg-city').value.trim();
-            let stateZip = document.getElementById('cfg-state-zip').value.trim();
-
-            SCHOOL_CONFIG.district_name = document.getElementById('cfg-district').value.trim() || "SCHOOL DISTRICT";
-            SCHOOL_CONFIG.school_name = document.getElementById('cfg-school').value.trim() || "CAMPUS";
-            SCHOOL_CONFIG.address = street || "";
-            SCHOOL_CONFIG.city = city || "";
-            SCHOOL_CONFIG.state_zip = stateZip || "";
-
-            if (street || city) {
-                let coords = await geocodeAddress(street, city, stateZip);
-                if (coords) {
-                    SCHOOL_CONFIG.map_center_lat = coords.lat;
-                    SCHOOL_CONFIG.map_center_lng = coords.lng;
-                } else {
-                    alert("Unable to pinpoint exact address. Defaulting to general region.");
-                    if (!SCHOOL_CONFIG.map_center_lat) {
-                        SCHOOL_CONFIG.map_center_lat = 38.89511;
-                        SCHOOL_CONFIG.map_center_lng = -77.03637;
+            // Direct geocoding lookup
+            let fullSearch = `${SCHOOL_CONFIG.address}, ${SCHOOL_CONFIG.city}, ${SCHOOL_CONFIG.state_zip}`;
+            fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(fullSearch)}`)
+                .then(res => res.json())
+                .then(data => {
+                    if (data && data.length > 0) {
+                        SCHOOL_CONFIG.lat = parseFloat(data[0].lat);
+                        SCHOOL_CONFIG.lng = parseFloat(data[0].lon);
                     }
-                }
-            } else {
-                if (!SCHOOL_CONFIG.map_center_lat) {
-                    SCHOOL_CONFIG.map_center_lat = 38.89511;
-                    SCHOOL_CONFIG.map_center_lng = -77.03637;
-                }
-            }
-
-            btn.innerText = "💾 SAVE LOCATION & CENTER MAP";
-            btn.disabled = false;
-
-            initializeTenantSystem();
-            showView('command');
+                    updateApp();
+                    showView('command');
+                })
+                .catch(() => {
+                    updateApp();
+                    showView('command');
+                });
         }
 
-        function initializeTenantSystem() {
-            document.getElementById('header-district-name').innerText = SCHOOL_CONFIG.district_name.toUpperCase();
-            document.getElementById('driver-school-display').innerText = `${SCHOOL_CONFIG.school_name} - ${SCHOOL_CONFIG.district_name}`;
+        function updateApp() {
+            document.getElementById('header-district-name').innerText = SCHOOL_CONFIG.district.toUpperCase();
+            document.getElementById('driver-school-display').innerText = `${SCHOOL_CONFIG.school} - ${SCHOOL_CONFIG.district}`;
             document.getElementById('driver-address-display').innerText = `${SCHOOL_CONFIG.address}, ${SCHOOL_CONFIG.city}, ${SCHOOL_CONFIG.state_zip}`;
 
-            let baseLat = SCHOOL_CONFIG.map_center_lat || 38.89511;
-            let baseLng = SCHOOL_CONFIG.map_center_lng || -77.03637;
-
             if (fleet.length === 0) {
-                for (let i = 1; i <= SCHOOL_CONFIG.max_slots; i++) {
+                for (let i = 1; i <= 20; i++) {
                     fleet.push({
                         slot: i,
                         id: '',
                         driver: '',
                         status: 'GREEN',
-                        lat: baseLat + (Math.random() - 0.5) * 0.015,
-                        lng: baseLng + (Math.random() - 0.5) * 0.015
+                        lat: SCHOOL_CONFIG.lat + (Math.random() - 0.5) * 0.02,
+                        lng: SCHOOL_CONFIG.lng + (Math.random() - 0.5) * 0.02
                     });
                 }
             } else {
-                fleet.forEach(bus => {
-                    bus.lat = baseLat + (Math.random() - 0.5) * 0.015;
-                    bus.lng = baseLng + (Math.random() - 0.5) * 0.015;
+                fleet.forEach(b => {
+                    b.lat = SCHOOL_CONFIG.lat + (Math.random() - 0.5) * 0.02;
+                    b.lng = SCHOOL_CONFIG.lng + (Math.random() - 0.5) * 0.02;
                 });
             }
 
             renderDropdowns();
-            renderSidebarList();
-            populateAssignmentInputs();
-            syncDriverView();
-        }
-
-        function renderDropdowns() {
-            let html = fleet.map((b, idx) => `<option value="${idx}">${b.id ? 'Bus #' + b.id : 'Slot #' + b.slot} ${b.driver ? '(' + b.driver + ')' : ''}</option>`).join('');
-            document.getElementById('select-slot').innerHTML = html;
-            document.getElementById('select-active-driver-slot').innerHTML = html;
-        }
-
-        function populateAssignmentInputs() {
-            let idx = parseInt(document.getElementById('select-slot').value) || 0;
-            let bus = fleet[idx];
-            if (bus) {
-                document.getElementById('input-bus-num').value = bus.id;
-                document.getElementById('input-driver-name').value = bus.driver;
-            }
-        }
-
-        function saveSlotData() {
-            let idx = parseInt(document.getElementById('select-slot').value);
-            if (isNaN(idx) || idx < 0 || idx >= fleet.length) return;
-
-            let busNum = document.getElementById('input-bus-num').value.trim();
-            let driverName = document.getElementById('input-driver-name').value.trim();
-
-            fleet[idx].id = busNum;
-            fleet[idx].driver = driverName;
-
-            renderDropdowns();
-            document.getElementById('select-slot').value = idx;
-            renderSidebarList();
+            renderSidebar();
+            populateInputs();
             syncDriverView();
 
             if (map) {
-                createOrUpdateMarker(fleet[idx]);
+                map.setView([SCHOOL_CONFIG.lat, SCHOOL_CONFIG.lng], 14);
+                fleet.forEach(b => drawMarker(b));
             }
         }
 
-        function clearSlotData() {
-            let idx = parseInt(document.getElementById('select-slot').value);
-            if (isNaN(idx) || idx < 0 || idx >= fleet.length) return;
+        function renderDropdowns() {
+            let options = fleet.map((b, i) => `<option value="${i}">${b.id ? 'Bus #' + b.id : 'Slot #' + b.slot} ${b.driver ? '(' + b.driver + ')' : ''}</option>`).join('');
+            document.getElementById('select-slot').innerHTML = options;
+            document.getElementById('select-active-driver-slot').innerHTML = options;
+        }
 
-            fleet[idx].id = '';
-            fleet[idx].driver = '';
+        function populateInputs() {
+            let i = parseInt(document.getElementById('select-slot').value) || 0;
+            document.getElementById('input-bus-num').value = fleet[i].id;
+            document.getElementById('input-driver-name').value = fleet[i].driver;
+        }
 
+        function saveSlot() {
+            let i = parseInt(document.getElementById('select-slot').value);
+            fleet[i].id = document.getElementById('input-bus-num').value.trim();
+            fleet[i].driver = document.getElementById('input-driver-name').value.trim();
+
+            renderDropdowns();
+            document.getElementById('select-slot').value = i;
+            renderSidebar();
+            syncDriverView();
+            if (map) drawMarker(fleet[i]);
+        }
+
+        function clearSlot() {
+            let i = parseInt(document.getElementById('select-slot').value);
+            fleet[i].id = '';
+            fleet[i].driver = '';
             document.getElementById('input-bus-num').value = '';
             document.getElementById('input-driver-name').value = '';
 
             renderDropdowns();
-            document.getElementById('select-slot').value = idx;
-            renderSidebarList();
+            document.getElementById('select-slot').value = i;
+            renderSidebar();
             syncDriverView();
-
-            if (map) {
-                createOrUpdateMarker(fleet[idx]);
-            }
+            if (map) drawMarker(fleet[i]);
         }
 
         function syncDriverView() {
-            let idx = parseInt(document.getElementById('select-active-driver-slot').value) || 0;
-            let bus = fleet[idx];
-            if (bus) {
-                document.getElementById('driver-bus-title').innerText = bus.id ? `Bus #${bus.id}` : `Slot #${bus.slot} (Unassigned)`;
-                document.getElementById('driver-name-sub').innerText = bus.driver ? `Driver: ${bus.driver}` : `Driver: Unassigned`;
-            }
+            let i = parseInt(document.getElementById('select-active-driver-slot').value) || 0;
+            document.getElementById('driver-bus-title').innerText = fleet[i].id ? `Bus #${fleet[i].id}` : `Slot #${fleet[i].slot}`;
+            document.getElementById('driver-name-sub').innerText = fleet[i].driver ? `Driver: ${fleet[i].driver}` : `Driver: Unassigned`;
         }
 
-        function renderSidebarList() {
+        function renderSidebar() {
             document.getElementById('bus-list').innerHTML = fleet.map(b => `
                 <div class="bus-item">
                     <div><b>${b.id ? 'Bus #' + b.id : 'Slot #' + b.slot}</b> (${b.driver || 'Unassigned'})</div>
-                    <span class="badge badge-${b.status}">${b.status}</span>
+                    <span class="badge badge-GREEN">${b.status}</span>
                 </div>
             `).join('');
         }
 
-        function showView(viewName) {
-            document.getElementById('setup-view').classList.toggle('hidden', viewName !== 'setup');
-            document.getElementById('driver-view').classList.toggle('hidden', viewName !== 'driver');
-            document.getElementById('command-view').classList.toggle('hidden', viewName !== 'command');
-
-            document.getElementById('tab-setup').classList.toggle('active', viewName === 'setup');
-            document.getElementById('tab-driver').classList.toggle('active', viewName === 'driver');
-            document.getElementById('tab-command').classList.toggle('active', viewName === 'command');
-
-            if (viewName === 'command') {
-                if (!map) {
-                    initMapSystem();
-                } else {
-                    setTimeout(() => {
-                        map.invalidateSize();
-                        map.setView([SCHOOL_CONFIG.map_center_lat, SCHOOL_CONFIG.map_center_lng], 14);
-                        fleet.forEach(b => createOrUpdateMarker(b));
-                    }, 200);
-                }
-            }
-        }
-
-        function initMapSystem() {
-            map = L.map('map').setView([SCHOOL_CONFIG.map_center_lat, SCHOOL_CONFIG.map_center_lng], 14);
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19 }).addTo(map);
-
-            setTimeout(() => {
-                map.invalidateSize();
-                fleet.forEach(bus => createOrUpdateMarker(bus));
-            }, 200);
-        }
-
-        function createOrUpdateMarker(bus) {
-            if (busMarkers[bus.slot]) map.removeLayer(busMarkers[bus.slot]);
-
-            let title = bus.id ? `Bus #${bus.id}` : `Slot #${bus.slot}`;
-            if (bus.driver) title += ` - ${bus.driver}`;
-
-            let marker = L.circleMarker([bus.lat, bus.lng], {
-                radius: 10,
-                fillColor: bus.status === 'RED' ? '#dc2626' : (bus.status === 'YELLOW' ? '#ca8a04' : '#16a34a'),
-                color: '#ffffff',
-                weight: 2,
-                fillOpacity: 0.9
-            }).addTo(map);
-
-            marker.bindPopup(`<b>${title}</b><br>Status: ${bus.status}`);
-            busMarkers[bus.slot] = marker;
+        function showView(view) {
+            document.getElementById('setup-view').classList.toggle('hidden', view !== 'setup');
+            document.getElementById('driver-view').classList.toggle('
