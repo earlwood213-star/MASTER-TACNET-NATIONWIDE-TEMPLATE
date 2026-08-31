@@ -65,7 +65,7 @@
 
         .setup-card {
             width: 100%;
-            max-width: 800px;
+            max-width: 700px;
             background: rgba(0, 120, 255, 0.12);
             backdrop-filter: blur(12px);
             border: 2px solid #fbbf24;
@@ -95,36 +95,22 @@
             background: #000;
             color: #fff;
             border: 1px solid #00f0ff;
-            padding: 10px;
+            padding: 12px;
             border-radius: 6px;
             font-size: 15px;
-        }
-
-        .btn-lookup {
-            background: #00f0ff;
-            color: #020926;
-            border: none;
-            padding: 12px;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: 900;
-            cursor: pointer;
-            grid-column: span 2;
-            margin-top: 5px;
-            text-transform: uppercase;
         }
 
         .btn-save-setup {
             background: #fbbf24;
             color: #020926;
             border: none;
-            padding: 14px;
+            padding: 16px;
             border-radius: 8px;
             font-size: 18px;
             font-weight: 900;
             cursor: pointer;
             width: 100%;
-            margin-top: 15px;
+            margin-top: 20px;
             text-transform: uppercase;
             box-shadow: 0 0 15px rgba(251, 191, 36, 0.4);
         }
@@ -181,7 +167,6 @@
         .btn-group-row { display: flex; gap: 8px; margin-top: 8px; }
         .action-btn { background: #00f0ff; color: #020926; border: none; padding: 10px; border-radius: 6px; font-weight: 800; cursor: pointer; flex: 2; }
         .erase-btn { background: #ef4444; color: #fff; border: none; padding: 10px; border-radius: 6px; font-weight: 800; cursor: pointer; flex: 1; }
-        .reset-all-btn { background: #ea580c; color: #fff; border: none; padding: 10px; border-radius: 6px; font-weight: 800; cursor: pointer; width: 100%; margin-top: 6px; }
 
         .bus-list { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 6px; }
         .bus-item { background: rgba(255,255,255,0.05); padding: 10px; border-radius: 6px; border-left: 4px solid #00f0ff; display: flex; justify-content: space-between; align-items: center; }
@@ -210,8 +195,8 @@
 
         <div id="setup-view" class="view-panel">
             <div class="setup-card">
-                <h2 style="color: #fbbf24; font-size: 26px; border-bottom: 2px solid #fbbf24; padding-bottom: 10px;">⚙️ PURCHASING SCHOOL LOCATION & SYSTEM SETUP</h2>
-                <p style="color: #cbd5e1; font-size: 14px; margin-top: 8px;">Enter your school district details below. Click <b>"FIND ADDRESS & CENTER MAP"</b> to automatically look up your GPS location.</p>
+                <h2 style="color: #fbbf24; font-size: 24px; border-bottom: 2px solid #fbbf24; padding-bottom: 10px;">⚙️ SCHOOL LOCATION & SYSTEM SETUP</h2>
+                <p style="color: #cbd5e1; font-size: 14px; margin-top: 8px;">Enter your school address details below. The system will automatically convert the address into live map coordinates upon saving.</p>
                 
                 <div class="form-grid">
                     <div class="form-group full-width">
@@ -234,20 +219,9 @@
                         <label>State & Zip Code</label>
                         <input type="text" id="cfg-state-zip" placeholder="e.g. VA 22181">
                     </div>
-
-                    <button class="btn-lookup" onclick="lookupAddressGPS()">🔍 FIND ADDRESS & CENTER MAP</button>
-
-                    <div class="form-group">
-                        <label>Auto-Detected Latitude (GPS)</label>
-                        <input type="text" id="cfg-lat" placeholder="Click 'Find Address' above" readonly style="background:#111; color:#00f0ff;">
-                    </div>
-                    <div class="form-group">
-                        <label>Auto-Detected Longitude (GPS)</label>
-                        <input type="text" id="cfg-lng" placeholder="Click 'Find Address' above" readonly style="background:#111; color:#00f0ff;">
-                    </div>
                 </div>
 
-                <button class="btn-save-setup" onclick="saveSchoolSetup()">💾 SAVE SCHOOL LOCATION & INITIALIZE SYSTEM</button>
+                <button class="btn-save-setup" id="btn-save" onclick="saveSchoolSetup()">💾 SAVE LOCATION & CENTER MAP</button>
             </div>
         </div>
         
@@ -265,7 +239,7 @@
 
             <div class="glass-card">
                 <p style="color: #00f0ff; font-size: 14px; font-weight: bold; margin-bottom: 6px;">SELECT CURRENT ACTIVE DRIVER UNIT:</p>
-                <select id="select-active-driver-slot" class="select-driver-slot" onchange="changeActiveDriverSlot()"></select>
+                <select id="select-active-driver-slot" class="select-driver-slot"></select>
 
                 <div class="bus-status-title" id="driver-bus-title">Slot #1 (Unassigned)</div>
                 <div class="bus-status-sub" id="driver-name-sub">Driver: Unassigned</div>
@@ -283,7 +257,7 @@
             <div class="sidebar">
                 <div class="panel-glass">
                     <p style="color: #00f0ff; font-weight: bold; font-size: 15px;">✏️ ASSIGN OR CLEAR BUS & DRIVER</p>
-                    <div class="input-row"><select id="select-slot" onchange="loadSlotData()"></select></div>
+                    <div class="input-row"><select id="select-slot"></select></div>
                     <div class="input-row">
                         <input type="text" id="input-bus-num" placeholder="Bus #">
                         <input type="text" id="input-driver-name" placeholder="Driver Name">
@@ -292,10 +266,6 @@
                         <button class="action-btn" onclick="saveSlotData()">💾 Save</button>
                         <button class="erase-btn" onclick="clearSlotData()">🗑️ Clear</button>
                     </div>
-                </div>
-
-                <div class="panel-glass">
-                    <button class="reset-all-btn" onclick="resetAllBuses()">🔄 CLEAR ALL FLEET ALERTS</button>
                 </div>
 
                 <div style="font-size: 16px; font-weight: bold; color: #00f0ff;">Active Fleet Units</div>
@@ -309,4 +279,146 @@
 
     </div>
 
-    <script src="
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        let SCHOOL_CONFIG = {
+            district_name: "SAMPLE DISTRICT",
+            school_name: "CENTRAL HIGH",
+            address: "",
+            city: "",
+            state_zip: "",
+            map_center_lat: 38.89511,
+            map_center_lng: -77.03637,
+            max_slots: 20
+        };
+
+        let map = null;
+        let busMarkers = {};
+        let fleet = [];
+
+        async function saveSchoolSetup() {
+            let btn = document.getElementById('btn-save');
+            btn.innerText = "⏳ LOCATING SCHOOL ADDRESS...";
+            btn.disabled = true;
+
+            let street = document.getElementById('cfg-address').value.trim();
+            let city = document.getElementById('cfg-city').value.trim();
+            let stateZip = document.getElementById('cfg-state-zip').value.trim();
+
+            SCHOOL_CONFIG.district_name = document.getElementById('cfg-district').value.trim() || "SAMPLE DISTRICT";
+            SCHOOL_CONFIG.school_name = document.getElementById('cfg-school').value.trim() || "CENTRAL HIGH";
+            SCHOOL_CONFIG.address = street || "MAIN ST";
+            SCHOOL_CONFIG.city = city || "ANYTOWN";
+            SCHOOL_CONFIG.state_zip = stateZip || "VA 00000";
+
+            if (street && city) {
+                let query = `${street}, ${city}, ${stateZip}`;
+                try {
+                    let resp = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}`);
+                    let data = await resp.json();
+                    if (data && data.length > 0) {
+                        SCHOOL_CONFIG.map_center_lat = parseFloat(data[0].lat);
+                        SCHOOL_CONFIG.map_center_lng = parseFloat(data[0].lon);
+                    }
+                } catch(e) {
+                    console.error("Geocoding lookup failed, defaulting to default view.");
+                }
+            }
+
+            btn.innerText = "💾 SAVE LOCATION & CENTER MAP";
+            btn.disabled = false;
+
+            initializeTenantSystem();
+            showView('command');
+        }
+
+        function initializeTenantSystem() {
+            document.getElementById('header-district-name').innerText = SCHOOL_CONFIG.district_name.toUpperCase();
+            document.getElementById('driver-school-display').innerText = `${SCHOOL_CONFIG.school_name} - ${SCHOOL_CONFIG.district_name}`;
+            document.getElementById('driver-address-display').innerText = `${SCHOOL_CONFIG.address}, ${SCHOOL_CONFIG.city}, ${SCHOOL_CONFIG.state_zip}`;
+
+            fleet = [];
+            for (let i = 1; i <= SCHOOL_CONFIG.max_slots; i++) {
+                fleet.push({
+                    slot: i,
+                    id: '',
+                    driver: '',
+                    status: 'GREEN',
+                    lat: SCHOOL_CONFIG.map_center_lat + (Math.random() - 0.5) * 0.015,
+                    lng: SCHOOL_CONFIG.map_center_lng + (Math.random() - 0.5) * 0.015
+                });
+            }
+
+            renderDropdowns();
+            renderSidebarList();
+        }
+
+        function showView(viewName) {
+            document.getElementById('setup-view').classList.toggle('hidden', viewName !== 'setup');
+            document.getElementById('driver-view').classList.toggle('hidden', viewName !== 'driver');
+            document.getElementById('command-view').classList.toggle('hidden', viewName !== 'command');
+
+            document.getElementById('tab-setup').classList.toggle('active', viewName === 'setup');
+            document.getElementById('tab-driver').classList.toggle('active', viewName === 'driver');
+            document.getElementById('tab-command').classList.toggle('active', viewName === 'command');
+
+            if (viewName === 'command') {
+                if (!map) {
+                    initMapSystem();
+                } else {
+                    setTimeout(() => {
+                        map.invalidateSize();
+                        map.setView([SCHOOL_CONFIG.map_center_lat, SCHOOL_CONFIG.map_center_lng], 14);
+                        fleet.forEach(b => createOrUpdateMarker(b));
+                    }, 200);
+                }
+            }
+        }
+
+        function initMapSystem() {
+            map = L.map('map').setView([SCHOOL_CONFIG.map_center_lat, SCHOOL_CONFIG.map_center_lng], 14);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19 }).addTo(map);
+
+            setTimeout(() => {
+                map.invalidateSize();
+                fleet.forEach(bus => createOrUpdateMarker(bus));
+            }, 200);
+        }
+
+        function createOrUpdateMarker(bus) {
+            if (busMarkers[bus.slot]) map.removeLayer(busMarkers[bus.slot]);
+
+            let title = bus.id ? `Bus #${bus.id}` : `Slot #${bus.slot}`;
+            if (bus.driver) title += ` - ${bus.driver}`;
+
+            let marker = L.circleMarker([bus.lat, bus.lng], {
+                radius: 10,
+                fillColor: bus.status === 'RED' ? '#dc2626' : (bus.status === 'YELLOW' ? '#ca8a04' : '#16a34a'),
+                color: '#ffffff',
+                weight: 2,
+                fillOpacity: 0.9
+            }).addTo(map);
+
+            marker.bindPopup(`<b>${title}</b><br>Status: ${bus.status}`);
+            busMarkers[bus.slot] = marker;
+        }
+
+        function renderDropdowns() {
+            let html = fleet.map((b, idx) => `<option value="${idx}">${b.id ? 'Bus #' + b.id : 'Slot #' + b.slot} ${b.driver ? '(' + b.driver + ')' : ''}</option>`).join('');
+            document.getElementById('select-slot').innerHTML = html;
+            document.getElementById('select-active-driver-slot').innerHTML = html;
+        }
+
+        function renderSidebarList() {
+            document.getElementById('bus-list').innerHTML = fleet.map(b => `
+                <div class="bus-item">
+                    <div><b>${b.id ? 'Bus #' + b.id : 'Slot #' + b.slot}</b> (${b.driver || 'Unassigned'})</div>
+                    <span class="badge badge-${b.status}">${b.status}</span>
+                </div>
+            `).join('');
+        }
+
+        window.onload = initializeTenantSystem;
+    </script>
+</body>
+</html>
